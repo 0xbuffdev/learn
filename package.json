@@ -4,7 +4,7 @@
 	"private": true,
 	"type": "module",
 	"description": "0xBUFF product catalog and documentation site, with product overviews and technical references.",
-	"homepage": "https://documentation.0xbuff.com/",
+	"homepage": "https://learn.0xbuff.com/",
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/0xbuffdev/learn.git"
