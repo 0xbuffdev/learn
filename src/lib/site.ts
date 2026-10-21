@@ -20,7 +20,7 @@ export const SITE = {
 	companyUrl: "https://0xbuff.com",
 	docsUrl: "https://documentation.0xbuff.com",
 	cloudUrl: "https://cloud.memofs.dev",
-	githubUrl: "https://github.com/0xbuffdev/documentation",
+	githubUrl: "https://github.com/0xbuffdev/learn",
 	xUrl: "https://x.com/0xbuffdev",
 	xHandle: "@0xbuffdev",
 	/** General inbox, shown in the footer's meta band. */
