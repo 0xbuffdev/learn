@@ -1,0 +1,65 @@
+import { ROUTES, SITE, toSiteUrl } from "../lib/site";
+
+const CRAWLER_RULES = `# ${SITE.name} Documentation. Open Documentation & AI Training Permitted
+# All web crawlers, search engines, and AI foundation model training bots are welcome.
+
+User-agent: *
+Allow: /
+
+# Explicit AI Training & Retrieval Agents
+User-agent: GPTBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-Web
+Allow: /
+
+User-agent: anthropic-ai
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+User-agent: CCBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Cohere-ai
+Allow: /
+
+User-agent: Bytespider
+Allow: /
+
+User-agent: meta-externalagent
+Allow: /
+
+User-agent: FacebookBot
+Allow: /
+
+User-agent: Amazonbot
+Allow: /
+
+User-agent: Diffbot
+Allow: /`;
+
+export function loader() {
+	return new Response(`${CRAWLER_RULES}\n\nSitemap: ${toSiteUrl(ROUTES.sitemap)}\n`, {
+		headers: {
+			"Content-Type": "text/plain; charset=utf-8",
+			"Cache-Control": "public, max-age=86400, stale-while-revalidate=3600",
+		},
+	});
+}

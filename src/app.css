@@ -1,0 +1,425 @@
+/* 0xBUFF documentation — application stylesheet.
+
+   The platform design system is the single source of truth for tokens; this
+   file carries those tokens verbatim (fonts, palette, radii, base layer, the
+   shared `bg-dots` / `caret-blink` / `scroll-reveal` utilities) the same way
+   `@repo/ui/src/app.css` does for the monorepo apps.
+
+   Markdown prose and code blocks are styled by fumadocs (`preset` +
+   `neutral` + fumadocs' typography plugin) — no `.content` /
+   code-block contract CSS is layered on top of them. Where the two systems
+   meet, the `--color-fd-*` mapping below points fumadocs' surface at the
+   platform tokens. */
+@import "tailwindcss";
+@import "tw-animate-css";
+@import "shadcn/tailwind.css";
+@import "fumadocs-ui/css/neutral.css";
+@import "fumadocs-ui/css/preset.css";
+@import "katex/dist/katex.css";
+@import "@fontsource-variable/dm-sans";
+@import "@fontsource-variable/jetbrains-mono";
+@import "@fontsource-variable/orbitron";
+
+/* Include app routes, local UI components, and markdown sources. */
+@source "./**/*.{ts,tsx,md,mdx}";
+
+@custom-variant dark (&:is(.dark *));
+
+/* Brand palette. Light is :root, dark is .dark (runtime toggle, default dark).
+   Canonical shadcn names: brand orange lives in --primary, violet/green in
+   --chart-2/--chart-3. --accent is the neutral hover surface per shadcn. */
+:root {
+  --brand-primary: #c2410c;
+  --background: #f2f0ea;
+  --foreground: #181817;
+
+  --card: #f2f0ea;
+  --card-foreground: #181817;
+  --popover: #f2f0ea;
+  --popover-foreground: #181817;
+  --primary: var(--brand-primary);
+  --primary-foreground: #fff;
+  --secondary: color-mix(in srgb, #181817 6%, #f2f0ea);
+  --secondary-foreground: #181817;
+  --muted: color-mix(in srgb, #181817 6%, #f2f0ea);
+  --muted-foreground: #63615b;
+  --accent: color-mix(in srgb, #181817 6%, #f2f0ea);
+  --accent-foreground: #181817;
+  --destructive: oklch(0.545 0.235 27.325);
+  /* Amber, for callouts. Deliberately not a `--chart-*` step: that ramp runs
+     purple through green and has no warm-yellow neighbour to borrow. */
+  --warning: #c98a1b;
+  --border: rgba(24, 24, 23, 0.16);
+  --input: #7d7b75;
+  --ring: var(--brand-primary);
+  --chart-1: var(--brand-primary);
+  --chart-2: #6a4fc9;
+  --chart-3: #3f6b0f;
+  --chart-4: #63615b;
+  --chart-5: #181817;
+  --radius: 0;
+  --sidebar: #f2f0ea;
+  --sidebar-foreground: #181817;
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: #fff;
+  --sidebar-accent: color-mix(in srgb, #181817 6%, #f2f0ea);
+  --sidebar-accent-foreground: #181817;
+  --sidebar-border: rgba(24, 24, 23, 0.16);
+  --sidebar-ring: var(--brand-primary);
+}
+
+.dark {
+  --brand-primary: #ff7148;
+  --background: #111110;
+  --foreground: #f1efe8;
+
+  --card: #1d1d1b;
+  --card-foreground: #efede5;
+  --popover: #111110;
+  --popover-foreground: #f1efe8;
+  --primary: var(--brand-primary);
+  --primary-foreground: #1a1917;
+  --secondary: color-mix(in srgb, #f1efe8 8%, #111110);
+  --secondary-foreground: #f1efe8;
+  --muted: color-mix(in srgb, #f1efe8 8%, #111110);
+  --muted-foreground: #99978e;
+  --accent: color-mix(in srgb, #f1efe8 8%, #111110);
+  --accent-foreground: #f1efe8;
+  --destructive: oklch(0.704 0.191 22.216);
+  /* Lifted the way every other token lifts here — lighter, not neon. */
+  --warning: #e8b04a;
+  --border: rgba(241, 239, 232, 0.16);
+  --input: #77766f;
+  --ring: var(--brand-primary);
+  --chart-1: var(--brand-primary);
+  --chart-2: #8b72ec;
+  --chart-3: #a5ce82;
+  --chart-4: #99978e;
+  --chart-5: #f1efe8;
+  --sidebar: #111110;
+  --sidebar-foreground: #f1efe8;
+  --sidebar-primary: var(--brand-primary);
+  --sidebar-primary-foreground: #1a1917;
+  --sidebar-accent: color-mix(in srgb, #f1efe8 8%, #111110);
+  --sidebar-accent-foreground: #f1efe8;
+  --sidebar-border: rgba(241, 239, 232, 0.16);
+  --sidebar-ring: var(--brand-primary);
+}
+
+@theme inline {
+  --font-sans: 'DM Sans Variable', 'DM Sans', sans-serif;
+  --font-mono: 'JetBrains Mono Variable', 'JetBrains Mono', monospace;
+  --font-display: 'Orbitron Variable', 'Orbitron', sans-serif;
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-warning: var(--warning);
+  --color-border: var(--border);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  --color-chart-1: var(--chart-1);
+  --color-chart-2: var(--chart-2);
+  --color-chart-3: var(--chart-3);
+  --color-chart-4: var(--chart-4);
+  --color-chart-5: var(--chart-5);
+  --color-sidebar: var(--sidebar);
+  --color-sidebar-foreground: var(--sidebar-foreground);
+  --color-sidebar-primary: var(--sidebar-primary);
+  --color-sidebar-primary-foreground: var(--sidebar-primary-foreground);
+  --color-sidebar-accent: var(--sidebar-accent);
+  --color-sidebar-accent-foreground: var(--sidebar-accent-foreground);
+  --color-sidebar-border: var(--sidebar-border);
+  --color-sidebar-ring: var(--sidebar-ring);
+  --radius-sm: var(--radius);
+  --radius-md: var(--radius);
+  --radius-lg: var(--radius);
+  --radius-xl: var(--radius);
+  --radius-2xl: var(--radius);
+  --radius-3xl: var(--radius);
+  --radius-4xl: var(--radius);
+}
+
+/* Map fumadocs' own `fd-*` surface onto the platform tokens, so nav, docs
+   chrome, and search inherit the brand palette instead of fumadocs' neutral
+   greys. Both blocks cascade after the fumadocs imports above, so light and
+   dark both resolve from here. */
+:root {
+  --fd-radius: 0;
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-ring: var(--ring);
+}
+
+.dark {
+  --fd-radius: 0;
+  --color-fd-background: var(--background);
+  --color-fd-foreground: var(--foreground);
+  --color-fd-muted: var(--muted);
+  --color-fd-muted-foreground: var(--muted-foreground);
+  --color-fd-popover: var(--popover);
+  --color-fd-popover-foreground: var(--popover-foreground);
+  --color-fd-card: var(--card);
+  --color-fd-card-foreground: var(--card-foreground);
+  --color-fd-border: var(--border);
+  --color-fd-primary: var(--primary);
+  --color-fd-primary-foreground: var(--primary-foreground);
+  --color-fd-secondary: var(--secondary);
+  --color-fd-secondary-foreground: var(--secondary-foreground);
+  --color-fd-accent: var(--accent);
+  --color-fd-accent-foreground: var(--accent-foreground);
+  --color-fd-ring: var(--ring);
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  html {
+    scroll-behavior: smooth;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html {
+      scroll-behavior: auto;
+    }
+    *,
+    *::before,
+    *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+    }
+    /* The blink is a hard `infinite` loop, so collapsing the duration alone
+       still leaves it looping. Kill it outright. */
+    .caret-blink {
+      animation: none !important;
+    }
+  }
+  body {
+    background: var(--background);
+    color: var(--foreground);
+    font-family: var(--font-sans);
+    @apply antialiased;
+  }
+  ::selection {
+    background: var(--primary);
+    color: var(--primary-foreground);
+  }
+  button:not(:disabled),
+  [role="button"]:not(:disabled) {
+    cursor: pointer;
+  }
+  code, pre {
+    font-family: var(--font-mono), monospace;
+  }
+  a {
+    color: inherit;
+    text-decoration: none;
+  }
+}
+
+/* Dot matrix behind the hero — one utility instead of an inline
+   `background-image` + `background-size` pair repeated per call site. */
+@utility bg-dots {
+  background-image: radial-gradient(
+    color-mix(in oklch, var(--foreground) 14%, transparent) 1px,
+    transparent 1px
+  );
+  background-size: 24px 24px;
+}
+
+@utility caret-blink {
+  animation: caret-blink 1.1s steps(1) infinite;
+}
+
+@keyframes caret-blink {
+  50% {
+    opacity: 0;
+  }
+}
+
+/* The width of the column the page rails bound. This is the SSOT for the frame
+   geometry: `PAGE_COLUMN` in `components/frame.tsx` and the intersection
+   markers below both use this value, so a rail and a marker cannot drift apart. */
+:root {
+  --rail-column: 72rem;
+}
+
+@utility page-column {
+  width: 100%;
+  max-width: var(--rail-column);
+}
+
+/* Fumadocs marks both controls as pills internally; keep the shared navbar's
+   search field and theme switch square without replacing their layout classes. */
+#nd-nav [data-search-full],
+#nd-nav [data-search-full] kbd,
+#nd-nav [data-theme-toggle],
+#nd-nav [data-theme-toggle] > * {
+  border-radius: 0;
+}
+
+/* THE INTERSECTION MARKER — the 0xBUFF frame vocabulary's square marks at the
+   points where a full-width rule crosses the page rails. `.ruled` is for a rule
+   on the element's BOTTOM edge; `.ruled-top` is for a rule on its TOP edge.
+   They differ only in which edge the marker is centred on, so both share one
+   geometry block. `RULED_BAND` / `RULED_BAND_TOP` in `components/frame.tsx`
+   are the matching class constants — use those rather than typing `ruled` by
+   hand. */
+.ruled,
+.ruled-top {
+  position: relative;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    z-index: 20;
+    width: 9px;
+    height: 9px;
+    border: 1px solid var(--border);
+    background: var(--background);
+    pointer-events: none;
+  }
+
+  &::before {
+    left: calc(max(0px, (100% - var(--rail-column)) / 2) - 4.5px);
+  }
+
+  &::after {
+    right: calc(max(0px, (100% - var(--rail-column)) / 2) - 4.5px);
+  }
+
+  /* Below the rail width there are no rails to cross, so there is no
+     intersection to mark — and without this both markers would collapse onto
+     the same edge of a narrow screen. */
+  @media (width < 72rem) {
+    &::before,
+    &::after {
+      display: none;
+    }
+  }
+}
+
+.ruled::before,
+.ruled::after {
+  bottom: -4.5px;
+}
+
+.ruled-top::before,
+.ruled-top::after {
+  top: -4.5px;
+}
+
+/* Staggered entrance for page-hero children. The delay is supplied inline
+   per element so one hero can cascade without every hero sharing a timer. */
+@keyframes rise {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@utility animate-rise {
+  animation: rise 0.6s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+
+/* Drafting guidelines that draw themselves out from an edge on load, and the
+   crosshair markers that pop in where two rules meet. Used by the memofs-style
+   hero boxes (`not-found`, `changelog`) and `Crosshair`
+   (`components/crosshair.tsx`). Respect for reduced motion comes from the
+   base-layer catch-all, which flattens their duration. */
+@keyframes lineDrawX {
+  0% {
+    transform: scaleX(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleX(1);
+    opacity: 1;
+  }
+}
+
+@keyframes lineDrawY {
+  0% {
+    transform: scaleY(0);
+    opacity: 0;
+  }
+  100% {
+    transform: scaleY(1);
+    opacity: 1;
+  }
+}
+
+@keyframes crosshairPop {
+  0%,
+  50% {
+    transform: scale(0);
+    opacity: 0;
+  }
+  80% {
+    transform: scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+/* Blueprint product diagrams (`components/products/product-illustration.tsx`):
+   a highlighted path draws itself in once on mount. Paths opt in by carrying
+   `pathLength={1}` and the utility class, so one keyframe serves every shape
+   (path/rect/polyline all honour pathLength). Reduced-motion comes from the
+   base-layer catch-all, which flattens the duration to a completed state. */
+@keyframes diagram-draw {
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+@utility diagram-draw {
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: diagram-draw 1.4s cubic-bezier(0.16, 1, 0.3, 1) 0.35s both;
+}
+
+@utility animate-line-x {
+  animation: lineDrawX 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-line-y {
+  animation: lineDrawY 0.9s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+@utility animate-crosshair {
+  animation: crosshairPop 1.1s cubic-bezier(0.16, 1, 0.3, 1) both;
+}

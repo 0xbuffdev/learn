@@ -1,0 +1,5 @@
+{
+	"docsContentDir": "content/docs",
+	"manifestoContentDir": "content/manifesto",
+	"docsImageRoute": "/og/docs"
+}
