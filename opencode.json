@@ -6,8 +6,8 @@
 			"description": "Use for content"
 		},
 		"platform": {
-			"path": "../documentation",
-			"description": "Use for 0xbuff Documentation reference"
+			"path": "../platform",
+			"description": "Use for the 0xBUFF platform monorepo"
 		},
 		"context": {
 			"path": "../context",

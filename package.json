@@ -1,13 +1,13 @@
 {
-	"name": "@0xbuff/documentation",
+	"name": "@0xbuff/learn",
 	"version": "0.0.0",
 	"private": true,
 	"type": "module",
 	"description": "0xBUFF product catalog and documentation site, with product overviews and technical references.",
-	"homepage": "https://documentation.0xbuff.com/",
+	"homepage": "https://learn.0xbuff.com/",
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/0xbuffdev/documentation.git"
+		"url": "git+https://github.com/0xbuffdev/learn.git"
 	},
 	"scripts": {
 		"build": "react-router build && node scripts/generate-og.mjs",
